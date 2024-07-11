@@ -1,14 +1,16 @@
 import torch
-import numpy as np
+import numpy
 from sklearn.manifold import TSNE
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
+checkpoints = './data/humanml3d_82k_ConvVAE_e2000.pt'
+
 # Load the tensor from the .pt file
-tensor = torch.load('checkpoints.pt')
+tensor = torch.load(checkpoints, map_location=torch.device('cpu'))
 
 # Ensure the tensor is on the CPU
-tensor = tensor.cpu()
+# tensor = tensor.cpu()
 
 # Convert the tensor to a NumPy array
 tensor_np = tensor.numpy()
