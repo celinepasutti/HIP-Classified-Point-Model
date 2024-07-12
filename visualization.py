@@ -13,7 +13,7 @@ tensor = torch.load(chk_path, map_location=torch.device('cpu'))
 tensor = tensor['latent_z_data'].cpu()
 new_tensor = torch.squeeze(tensor, dim=3)
 new_tensor = torch.flatten(new_tensor, start_dim=1, end_dim=2)
-new_tensor = new_tensor[:500, :500]
+# new_tensor = new_tensor[:500, :]
 
 # Convert the tensor to a NumPy array
 tensor_np = new_tensor.numpy()
@@ -37,8 +37,8 @@ ax = fig.add_subplot(111, projection='3d')
 scatter = ax.scatter(tensor_tsne[:, 0], tensor_tsne[:, 1], tensor_tsne[:, 2], c=clusters, cmap='viridis', marker='o')
 
 # Create a legend with the cluster labels
-legend1 = ax.legend(*scatter.legend_elements(), title="Clusters")
-ax.add_artist(legend1)
+#legend1 = ax.legend(*scatter.legend_elements(), title="Clusters")
+# ax.add_artist(legend1)
 
 # Set labels
 ax.set_xlabel('X')
