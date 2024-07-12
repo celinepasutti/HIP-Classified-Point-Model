@@ -4,7 +4,6 @@ from sklearn.manifold import TSNE
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
-
 chk_path = 'data/humanml3d_82k_ConvVAE_e2000.pt'
 
 # Load the tensor from the .pt file
@@ -13,16 +12,18 @@ tensor = torch.load(chk_path, map_location=torch.device('cpu'))
 # Ensure the tensor is on the CPU
 tensor = tensor['latent_z_data'].cpu()
 new_tensor = torch.squeeze(tensor, dim=3)
+new_tensor = torch.flatten(new_tensor, start_dim=1, end_dim=2)
+new_tensor = new_tensor[:500, :500]
 
 # Convert the tensor to a NumPy array
 tensor_np = new_tensor.numpy()
 print(tensor_np.shape)
 
 # Initialize the TSNE model
-tsne = TSNE(n_components=3, random_state=0)
+tsne_instance = TSNE(n_components=3, random_state=0)
 
 # Fit and transform the data
-tensor_tsne = tsne.fit_transform(tensor_np)
+tensor_tsne = tsne_instance.fit_transform(tensor_np)
 
 # Apply KMeans clustering to the 3D data
 kmeans = KMeans(n_clusters=20, random_state=0)
