@@ -1,19 +1,22 @@
 import torch
-import numpy
+import numpy as np
 from sklearn.manifold import TSNE
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
-checkpoints = './data/humanml3d_82k_ConvVAE_e2000.pt'
+
+chk_path = 'data/humanml3d_82k_ConvVAE_e2000.pt'
 
 # Load the tensor from the .pt file
-tensor = torch.load(checkpoints, map_location=torch.device('cpu'))
+tensor = torch.load(chk_path, map_location=torch.device('cpu'))
 
 # Ensure the tensor is on the CPU
-# tensor = tensor.cpu()
+tensor = tensor['latent_z_data'].cpu()
+new_tensor = torch.squeeze(tensor, dim=3)
 
 # Convert the tensor to a NumPy array
-tensor_np = tensor.numpy()
+tensor_np = new_tensor.numpy()
+print(tensor_np.shape)
 
 # Initialize the TSNE model
 tsne = TSNE(n_components=3, random_state=0)
